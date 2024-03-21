@@ -117,3 +117,20 @@ export const updateBook = async (req, res) => {
     });
   }
 };
+
+export const deleteBook = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await Book.findByIdAndDelete(id);
+
+    return res.status(200).json({ result });
+  } catch (err) {
+    console.log(err);
+    console.log("ERROR: Unable to delete");
+    return res.status(500).send({
+      ERROR: "Unable to delete",
+      Detail: err,
+    });
+  }
+};

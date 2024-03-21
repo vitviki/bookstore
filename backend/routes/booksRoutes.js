@@ -4,7 +4,7 @@ import {
   getBook,
   addBook,
   updateBook,
-  //deleteBook,
+  deleteBook,
 } from "../controllers/books.js";
 
 const router = express.Router();
@@ -22,5 +22,6 @@ router.post("/", addBook);
 router.put("/:id", updateBook);
 
 // Delete a book
+router.delete("/:id", deleteBook);
 
 export default router;
