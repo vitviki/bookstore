@@ -52,9 +52,9 @@ export const getBook = async (req, res) => {
   }
 };
 
+// Add a book
 export const addBook = async (req, res) => {
   try {
-    console.log(req.body);
     if (
       !req.body.title ||
       !req.body.author ||
@@ -82,6 +82,37 @@ export const addBook = async (req, res) => {
     console.log("ERROR: Unable to add the new book");
     return res.status(500).send({
       ERROR: "Unable to add the new book",
+      Detail: err,
+    });
+  }
+};
+
+// Update an existing book
+export const updateBook = async (req, res) => {
+  try {
+    if (
+      !req.body.title ||
+      !req.body.author ||
+      !req.body.publishedYear ||
+      !req.body.description
+    ) {
+      console.log("ERROR: Please fill in all the details");
+      return res.status(400).send({
+        ERROR: "Please fill in all the details",
+      });
+    }
+
+    // Get ID from params.
+    const { id } = req.params;
+
+    // Find book by ID and update.
+    const result = await Book.findByIdAndUpdate(id, req.body);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    console.log("ERROR: Unable to update");
+    return res.status(500).send({
+      ERROR: "Unable to update",
       Detail: err,
     });
   }
