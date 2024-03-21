@@ -1,8 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import booksRouter from "./routes/booksRoutes.js";
 
 const app = express();
+app.use(express.json());
+
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -11,6 +14,8 @@ const mongoDBURL = process.env.MOGODB_URL;
 app.get("/", (req, res) => {
   return res.status(200).send("Welcome to bookstore backend");
 });
+
+app.use("/books", booksRouter);
 
 // DB Connect
 mongoose
